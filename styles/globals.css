@@ -6,6 +6,8 @@
 
   --red: #EB5757;
   --blue:#2F80ED;
+
+  --link: var(--blue);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,6 +15,8 @@
       --fg: rgb(201, 209, 217);
       --bg: #0D1117;
       --grey: rgba(255, 255, 255, 0.2);
+
+      --link: var(--red);
   }
 }
 
@@ -26,9 +30,13 @@ body {
   color: var(--fg);
 }
 
+h1 {
+    font-size: 40px;
+}
+
 
 a {
-  color: inherit;
+  color: var(--link);
   text-decoration: none;
 }
 

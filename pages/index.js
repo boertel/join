@@ -277,6 +277,18 @@ export default function Home() {
           </code>
         ))}
       </div>
+      <div
+        style={{
+          marginTop: '80px',
+          textAlign: 'center',
+          marginBottom: '40px',
+          fontSize: '12px',
+        }}>
+        Built by{' '}
+        <a href="https://ben.oertel.fr/" target="_blank">
+          Benjamin Oertel
+        </a>
+      </div>
     </>
   );
 }
