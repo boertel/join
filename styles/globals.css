@@ -14,3 +14,22 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.text-a {
+    color: rgba(235, 87, 87, 1);
+}
+.text-b {
+    color: rgba(47, 128, 237, 1);
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+code {
+    transition: background-color .3s cubic-bezier(0.47, 0, 0.745, 0.715);
+    font-size: 1.3em;
+}
+code.active, code:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
