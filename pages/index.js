@@ -1,6 +1,8 @@
 import Head from 'next/head';
-import {useEffect, useCallback, useState} from 'react';
+import {useState} from 'react';
 import {useRouter} from 'next/router';
+import Venn from 'components/Venn';
+import useShortcuts from 'components/useShortcuts';
 
 const Hg = props => <span {...props} />;
 const Big = props => <b {...props} />;
@@ -150,63 +152,13 @@ export default function Home() {
     setCurrentIndex(found);
   };
 
-  const move = useCallback(
-    evt => {
-      switch (evt.key) {
-        case 'ArrowDown':
-        case 'j':
-          setCurrentIndex(((isNaN(currentIndex) ? -1 : currentIndex) + 1) % 7);
-          break;
-
-        case 'ArrowUp':
-        case 'k':
-          const next = (isNaN(currentIndex) ? 7 : currentIndex) - 1;
-          setCurrentIndex((next < 0 ? 6 : next) % 7);
-          break;
-
-        case '1':
-          setCurrentIndex(0);
-          break;
-
-        case '2':
-          setCurrentIndex(1);
-          break;
-
-        case '3':
-          setCurrentIndex(2);
-          break;
-
-        case '4':
-          setCurrentIndex(3);
-          break;
-
-        case '5':
-          setCurrentIndex(4);
-          break;
-
-        case '6':
-          setCurrentIndex(5);
-          break;
-
-        case '7':
-          setCurrentIndex(6);
-          break;
-
-        case 'Escape':
-          setCurrentIndex(null);
-          break;
-      }
-    },
-    [setCurrentIndex, currentIndex],
-  );
-
-  useEffect(() => {
-    window.addEventListener('keydown', move);
-    return () => window.removeEventListener('keydown', move);
-  }, [move]);
+  useShortcuts(setCurrentIndex);
 
   return (
     <>
+      <Head>
+        <title>JOINs</title>
+      </Head>
       <h1 style={{textAlign: 'center'}}>
         If you can't beat 'em, <code>JOIN</code> 'em!
       </h1>
@@ -216,68 +168,17 @@ export default function Home() {
           alignItems: 'center',
           justifyContent: 'center',
           marginTop: '40px',
+          padding: '0 12px',
+          position: 'sticky',
+          backgroundColor: 'var(--bg)',
+          top: 0,
         }}>
-        <svg
-          width="600"
-          height="320"
-          viewBox="0 0 700 420"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <clipPath id="cut">
-              <rect x="285" y="0" width="140" height="400" />
-            </clipPath>
-            <mask id="eraser">
-              <circle cx="488" cy="210" r={200 - 2} fill="#fff" />
-            </mask>
-          </defs>
-          <circle
-            cx="212"
-            cy="210"
-            r="200"
-            fill="#EB5757"
-            fillOpacity={circles[0] ? 0.7 : 0}
-            stroke="#EB5757"
-            strokeWidth="4"
-            onClick={() => toggle(0)}
-          />
-          <text
-            x="40"
-            y="212"
-            fill={circles[0] ? 'var(--bg)' : 'var(--red)'}
-            dominantBaseline="middle"
-            style={{fontSize: '36px', pointerEvents: 'none'}}>
-            Table {tableA}
-          </text>
-          <circle
-            cx="488"
-            cy="210"
-            r="200"
-            fill="#2F80ED"
-            fillOpacity={circles[2] ? 0.7 : 0}
-            stroke="#2F80ED"
-            strokeWidth="4"
-            onClick={() => toggle(2)}
-          />
-          <text
-            x="540"
-            y="212"
-            fill={circles[2] ? 'var(--bg)' : 'var(--blue)'}
-            dominantBaseline="middle"
-            style={{fontSize: '36px', pointerEvents: 'none'}}>
-            Table {tableB}
-          </text>
-          <circle
-            cx="212"
-            cy="210"
-            r={200 - 2}
-            fill={circles[1] ? '#6781CD' : 'var(--bg)'}
-            fillOpacity={circles[1] ? 1 : 1}
-            clipPath="url(#cut)"
-            mask="url(#eraser)"
-            onClick={() => toggle(1)}
-          />
-        </svg>
+        <Venn
+          tableA={tableA}
+          tableB={tableB}
+          circles={circles}
+          toggle={toggle}
+        />
       </div>
       <div
         style={{

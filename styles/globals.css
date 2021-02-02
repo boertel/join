@@ -1,11 +1,14 @@
 :root {
-  --fg: #000;
+  --black: #0E1117;
+
+  --fg: #0E1117;
   --bg: #fff;
 
   --grey: rgba(0, 0, 0, 0.2);
 
   --red: #EB5757;
-  --blue:#2F80ED;
+  --blue: #2F80ED;
+  --overlay: #6983CF;
 
   --link: var(--blue);
 }
@@ -14,7 +17,8 @@
   :root {
       --fg: rgb(201, 209, 217);
       --bg: #0D1117;
-      --grey: rgba(255, 255, 255, 0.2);
+      --overlay: #5169B3;
+      --grey: rgba(255, 255, 255, 0.1);
 
       --link: var(--red);
   }
@@ -30,6 +34,10 @@ body {
   color: var(--fg);
 }
 
+body {
+    position: relative;
+}
+
 h1 {
     font-size: 40px;
 }
@@ -38,6 +46,9 @@ h1 {
 a {
   color: var(--link);
   text-decoration: none;
+}
+a:hover, a:focus {
+  text-decoration: underline;
 }
 
 * {
@@ -61,4 +72,8 @@ a {
 }
 code.active, code:hover {
     background-color: var(--grey);
+}
+
+circle {
+    cursor: pointer;
 }
