@@ -160,7 +160,17 @@ export default function Home() {
         <title>JOINs</title>
       </Head>
       <h1 style={{textAlign: 'center'}}>
-        If you can't beat 'em, <code>JOIN</code> 'em!
+        If you can't beat 'em,{' '}
+        <code style={{padding: '4px'}}>
+          <a
+            className="invisible"
+            href="https://www.youtube.com/watch?v=6ENsh4thPFA"
+            target="_blank"
+            rel="noopener noreferrer nofollow">
+            JOIN
+          </a>
+        </code>{' '}
+        'em!
       </h1>
       <div
         style={{

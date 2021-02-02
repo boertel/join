@@ -50,6 +50,10 @@ a {
 a:hover, a:focus {
   text-decoration: underline;
 }
+a.invisible {
+    color: var(--fg);
+    text-decoration: none;
+}
 
 * {
   box-sizing: border-box;
