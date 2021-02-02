@@ -1,0 +1,4 @@
+- [ ] mobile
+- [ ] print version and/ or display view: show all queries and corresponding venn diagrams
+- [ ] SQL console to test out queries
+- [ ] postgres / mysql documentation link
