@@ -1,16 +1,15 @@
 import Head from 'next/head';
 import {useEffect, useCallback, useState} from 'react';
-import Circle from 'components/Circle';
 import {useRouter} from 'next/router';
 
 const Hg = props => <span {...props} />;
 const Big = props => <b {...props} style={{fontSize: '1.2em'}} />;
 
 export default function Home() {
-  const {query = {red: 'A', blue: 'B'}} = useRouter();
+  const {query} = useRouter();
 
-  const tableA = query.red;
-  const tableB = query.blue;
+  const tableA = query.red || 'A';
+  const tableB = query.blue || 'B';
 
   const queries = [
     {
@@ -170,6 +169,11 @@ export default function Home() {
 
         case '7':
           setCurrentIndex(6);
+          break;
+
+        case 'Escape':
+          setCurrentIndex(null);
+          break;
       }
     },
     [setCurrentIndex, currentIndex],
@@ -203,7 +207,7 @@ export default function Home() {
               <rect x="285" y="0" width="140" height="400" />
             </clipPath>
             <mask id="eraser">
-              <circle cx="488" cy="210" r={200 - 2} fill="white" />
+              <circle cx="488" cy="210" r={200 - 2} fill="#fff" />
             </mask>
           </defs>
           <circle
@@ -216,7 +220,12 @@ export default function Home() {
             strokeWidth="4"
             onClick={() => toggle(0)}
           />
-          <text x="10" y="10">
+          <text
+            x="40"
+            y="212"
+            fill={circles[0] ? 'var(--bg)' : 'var(--red)'}
+            dominantBaseline="middle"
+            style={{fontSize: '36px', pointerEvents: 'none'}}>
             Table {tableA}
           </text>
           <circle
@@ -229,13 +238,20 @@ export default function Home() {
             strokeWidth="4"
             onClick={() => toggle(2)}
           />
-          <text>Table {tableB}</text>
+          <text
+            x="540"
+            y="212"
+            fill={circles[2] ? 'var(--bg)' : 'var(--blue)'}
+            dominantBaseline="middle"
+            style={{fontSize: '36px', pointerEvents: 'none'}}>
+            Table {tableB}
+          </text>
           <circle
             cx="212"
             cy="210"
             r={200 - 2}
-            fill={circles[1] ? '#6781CD' : '#fff'}
-            fillOpacity={circles[1] ? 0.7 : 1}
+            fill={circles[1] ? '#6781CD' : 'var(--bg)'}
+            fillOpacity={circles[1] ? 1 : 1}
             clipPath="url(#cut)"
             mask="url(#eraser)"
             onClick={() => toggle(1)}
@@ -244,10 +260,7 @@ export default function Home() {
       </div>
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
+          display: 'grid',
           marginTop: '40px',
         }}>
         {queries.map((query, index) => (
@@ -258,7 +271,6 @@ export default function Home() {
             style={{
               padding: '18px',
               cursor: 'pointer',
-              width: '100%',
               margin: '6px 0',
             }}>
             {query.sql}
