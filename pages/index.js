@@ -98,7 +98,10 @@ export default function Home() {
           <br />
           <Comment>-- or</Comment>
           <br />
-          SELECT * FROM <A>{tableA}</A> <Big>RIGHT OUTER JOIN</Big>{' '}
+          SELECT * FROM <A>{tableA}</A>{' '}
+          <Big>
+            RIGHT <u>OUTER</u> JOIN
+          </Big>{' '}
           <B>{tableB}</B> ON <A>{tableA}</A>.value = <B>{tableB}</B>.value;
         </>
       ),
