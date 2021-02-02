@@ -3,7 +3,14 @@ import {useEffect, useCallback, useState} from 'react';
 import {useRouter} from 'next/router';
 
 const Hg = props => <span {...props} />;
-const Big = props => <b {...props} style={{fontSize: '1.2em'}} />;
+const Big = props => <b {...props} />;
+const Comment = props => (
+  <span {...props} style={{color: 'var(--grey)', lineHeight: '28px'}} />
+);
+const Optional = props => <span {...props} style={{display: 'none'}} />;
+
+const A = props => <Hg className="text-a text-bold" {...props} />;
+const B = props => <Hg className="text-b text-bold" {...props} />;
 
 export default function Home() {
   const {query} = useRouter();
@@ -15,10 +22,11 @@ export default function Home() {
     {
       sql: (
         <>
-          SELECT * FROM <Hg className="text-a text-bold">{tableA}</Hg>{' '}
-          <Big>LEFT JOIN</Big> <Hg className="text-b text-bold">{tableB}</Hg> ON{' '}
-          <Hg className="text-a text-bold">{tableA}</Hg>.value ={' '}
-          <Hg className="text-b text-bold">{tableB}</Hg>.value;
+          SELECT * FROM <A>{tableA}</A>{' '}
+          <Big>
+            LEFT <Optional>INNER</Optional> JOIN
+          </Big>{' '}
+          <B>{tableB}</B> ON <A>{tableA}</A>.value = <B>{tableB}</B>.value;
         </>
       ),
       circles: [true, true, false],
@@ -26,14 +34,23 @@ export default function Home() {
     {
       sql: (
         <>
-          SELECT * FROM <Hg className="text-a text-bold">{tableA}</Hg>{' '}
-          <Big>LEFT JOIN</Big> <Hg className="text-b text-bold">{tableB}</Hg> ON{' '}
-          <Hg className="text-a text-bold">{tableA}</Hg>.value ={' '}
-          <Hg className="text-b text-bold">{tableB}</Hg>.value WHERE{' '}
+          SELECT * FROM <A>{tableA}</A>{' '}
+          <Big>
+            LEFT <Optional>INNER</Optional> JOIN
+          </Big>{' '}
+          <B>{tableB}</B> ON <A>{tableA}</A>.value = <B>{tableB}</B>.value{' '}
           <u>
-            <Hg className="text-b text-bold">{tableB}</Hg> IS NULL
+            WHERE <B>{tableB}</B> IS NULL
           </u>
           ;
+          <br />
+          <Comment>-- or</Comment>
+          <br />
+          SELECT * FROM <A>{tableA}</A>{' '}
+          <Big>
+            LEFT <u>OUTER</u> JOIN
+          </Big>{' '}
+          <B>{tableB}</B> ON <A>{tableA}</A>.value = <B>{tableB}</B>.value;
         </>
       ),
       circles: [true, false, false],
@@ -42,11 +59,11 @@ export default function Home() {
     {
       sql: (
         <>
-          SELECT * FROM <Hg className="text-a text-bold">{tableA}</Hg>{' '}
-          <Big>FULL OUTER JOIN</Big>{' '}
-          <Hg className="text-b text-bold">{tableB}</Hg> ON{' '}
-          <Hg className="text-a text-bold">{tableA}</Hg>.value ={' '}
-          <Hg className="text-b text-bold">{tableB}</Hg>.value
+          SELECT * FROM <A>{tableA}</A>{' '}
+          <Big>
+            FULL <Optional>OUTER</Optional> JOIN
+          </Big>{' '}
+          <B>{tableB}</B> ON <A>{tableA}</A>.value = <B>{tableB}</B>.value;
         </>
       ),
       circles: [true, true, true],
@@ -55,10 +72,11 @@ export default function Home() {
     {
       sql: (
         <>
-          SELECT * FROM <Hg className="text-a text-bold">{tableA}</Hg>{' '}
-          <Big>RIGHT JOIN</Big> <Hg className="text-b text-bold">{tableB}</Hg>{' '}
-          ON <Hg className="text-a text-bold">{tableA}</Hg>.value ={' '}
-          <Hg className="text-b text-bold">{tableB}</Hg>.value
+          SELECT * FROM <A>{tableA}</A>{' '}
+          <Big>
+            RIGHT <Optional>INNER</Optional> JOIN
+          </Big>{' '}
+          <B>{tableB}</B> ON <A>{tableA}</A>.value = <B>{tableB}</B>.value;
         </>
       ),
       circles: [false, true, true],
@@ -66,13 +84,20 @@ export default function Home() {
     {
       sql: (
         <>
-          SELECT * FROM <Hg className="text-a text-bold">{tableA}</Hg>{' '}
-          <Big>RIGHT JOIN</Big> <Hg className="text-b text-bold">{tableB}</Hg>{' '}
-          ON <Hg className="text-a text-bold">{tableA}</Hg>.value ={' '}
-          <Hg className="text-b text-bold">{tableB}</Hg>.value WHERE{' '}
+          SELECT * FROM <A>{tableA}</A>{' '}
+          <Big>
+            RIGHT <Optional>INNER</Optional> JOIN
+          </Big>{' '}
+          <B>{tableB}</B> ON <A>{tableA}</A>.value = <B>{tableB}</B>.value{' '}
           <u>
-            <Hg className="text-a text-bold">{tableA}</Hg>.value IS NULL;
+            WHERE <A>{tableA}</A>.value IS NULL
           </u>
+          ;
+          <br />
+          <Comment>-- or</Comment>
+          <br />
+          SELECT * FROM <A>{tableA}</A> <Big>RIGHT OUTER JOIN</Big>{' '}
+          <B>{tableB}</B> ON <A>{tableA}</A>.value = <B>{tableB}</B>.value;
         </>
       ),
       circles: [false, false, true],
@@ -80,15 +105,15 @@ export default function Home() {
     {
       sql: (
         <>
-          SELECT * FROM <Hg className="text-a text-bold">{tableA}</Hg>{' '}
-          <Big>FULL OUTER JOIN</Big>{' '}
-          <Hg className="text-b text-bold">{tableB}</Hg> ON{' '}
-          <Hg className="text-a text-bold">{tableA}</Hg>.value ={' '}
-          <Hg className="text-b text-bold">{tableB}</Hg>.value WHERE{' '}
+          SELECT * FROM <A>{tableA}</A>{' '}
+          <Big>
+            FULL <Optional>OUTER</Optional> JOIN
+          </Big>{' '}
+          <B>{tableB}</B> ON <A>{tableA}</A>.value = <B>{tableB}</B>.value{' '}
           <u>
-            <Hg className="text-a text-bold">{tableA}</Hg>.value IS NULL OR{' '}
-            <Hg className="text-b text-bold">{tableB}</Hg>.value IS NULL;
+            WHERE <A>{tableA}</A>.value IS NULL OR <B>{tableB}</B>.value IS NULL
           </u>
+          ;
         </>
       ),
       circles: [true, false, true],
@@ -96,12 +121,8 @@ export default function Home() {
     {
       sql: (
         <>
-          SELECT * FROM <Hg className="text-a text-bold">{tableA}</Hg>{' '}
-          <Big>INNER JOIN</Big> <Hg className="text-b text-bold">{tableB}</Hg>{' '}
-          ON <Hg className="text-a text-bold">{tableA}</Hg>.value ={' '}
-          <Hg className="text-b text-bold">{tableB}</Hg>.value WHERE{' '}
-          <Hg className="text-a text-bold">{tableA}</Hg>.value ={' '}
-          <Hg className="text-b text-bold">{tableB}</Hg>.value;
+          SELECT * FROM <A>{tableA}</A> <Big>INNER JOIN</Big> <B>{tableB}</B> ON{' '}
+          <A>{tableA}</A>.value = <B>{tableB}</B>.value;
         </>
       ),
       circles: [false, true, false],
