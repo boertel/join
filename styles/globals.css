@@ -36,6 +36,8 @@ body {
 
 body {
     position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 
 h1 {
@@ -71,7 +73,7 @@ a.invisible {
 }
 
 .code, code {
-    transition: background-color .3s cubic-bezier(0.47, 0, 0.745, 0.715);
+    transition: background-color .3s ease-in-out;
     font-size: 1.3em;
 }
 code.active, code:hover {
